@@ -1,7 +1,7 @@
 export const P = {
   name: 'Chennuri Chandrasekhar', gh: 'Chanduchennuri',
   github: 'https://github.com/Chanduchennuri',
-  linkedin: 'https://www.linkedin.com/in/chandrashekhar-ch-00b913229/', // verify: resume lists /in/Chandrasekhar-CH
+  linkedin: 'https://www.linkedin.com/in/chandrasekhar-chennuri-austin/', // verify: resume lists /in/Chandrasekhar-CH
   email: 'ch.chandrasekhar781@gmail.com', phone: '+91 90320 98602',
   tagline: 'Software engineer building intelligent systems — backend, data pipelines, LLM apps and agentic AI.',
   summary: 'Backend and full-stack experience in Python, Java, FastAPI, Node.js, React and SQL. REST APIs, relational and NoSQL databases, and AI-augmented features using LLM APIs and RAG.',
