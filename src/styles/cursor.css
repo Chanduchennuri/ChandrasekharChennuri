@@ -1,0 +1,253 @@
+/* =========================================================
+   HUD CURSOR
+   ========================================================= */
+
+#cursor {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 34px;
+  height: 34px;
+
+  pointer-events: none;
+
+  z-index: 99999;
+
+  will-change:
+    transform,
+    width,
+    height;
+
+  transform-origin: center;
+
+  transition:
+    width 220ms cubic-bezier(.2, .8, .2, 1),
+    height 220ms cubic-bezier(.2, .8, .2, 1);
+}
+
+
+/* =========================================================
+   RETICLE
+   ========================================================= */
+
+.cursor-reticle {
+  position: absolute;
+
+  inset: 0;
+
+  animation:
+    none;
+
+  transition:
+    transform 250ms ease,
+    opacity 200ms ease;
+}
+
+
+/* =========================================================
+   CORNERS
+   ========================================================= */
+
+.corner {
+  position: absolute;
+
+  width: 8px;
+  height: 8px;
+
+  border-color: hsl(var(--accent));
+  border-style: solid;
+
+  opacity: .85;
+
+  transition:
+    width 220ms ease,
+    height 220ms ease,
+    opacity 220ms ease;
+}
+
+
+/* top left */
+
+.corner-tl {
+  top: 0;
+  left: 0;
+
+  border-width: 1px 0 0 1px;
+}
+
+
+/* top right */
+
+.corner-tr {
+  top: 0;
+  right: 0;
+
+  border-width: 1px 1px 0 0;
+}
+
+
+/* bottom right */
+
+.corner-br {
+  right: 0;
+  bottom: 0;
+
+  border-width: 0 1px 1px 0;
+}
+
+
+/* bottom left */
+
+.corner-bl {
+  bottom: 0;
+  left: 0;
+
+  border-width: 0 0 1px 1px;
+}
+
+
+/* =========================================================
+   CENTER LINES
+   ========================================================= */
+
+.cursor-line {
+  position: absolute;
+
+  background: hsl(var(--accent));
+
+  opacity: .45;
+}
+
+
+/* top */
+
+.cursor-line-top {
+  top: 0;
+  left: 50%;
+
+  width: 1px;
+  height: 5px;
+
+  transform: translateX(-50%);
+}
+
+
+/* right */
+
+.cursor-line-right {
+  right: 0;
+  top: 50%;
+
+  width: 5px;
+  height: 1px;
+
+  transform: translateY(-50%);
+}
+
+
+/* bottom */
+
+.cursor-line-bottom {
+  bottom: 0;
+  left: 50%;
+
+  width: 1px;
+  height: 5px;
+
+  transform: translateX(-50%);
+}
+
+
+/* left */
+
+.cursor-line-left {
+  left: 0;
+  top: 50%;
+
+  width: 5px;
+  height: 1px;
+
+  transform: translateY(-50%);
+}
+
+
+/* =========================================================
+   CENTER DOT
+   ========================================================= */
+
+.cursor-dot {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: hsl(var(--accent));
+
+  transform: translate(-50%, -50%);
+
+  box-shadow:
+    0 0 8px hsl(var(--accent) / .8);
+
+  transition:
+    transform 200ms ease,
+    width 200ms ease,
+    height 200ms ease;
+}
+
+
+/* =========================================================
+   HOVER / TARGET LOCK
+   ========================================================= */
+
+#cursor.is-locked .cursor-reticle {
+  animation-duration: none;
+}
+
+#cursor.is-locked .corner {
+  width: 12px;
+  height: 12px;
+
+  opacity: 1;
+}
+
+#cursor.is-locked .cursor-dot {
+  width: 6px;
+  height: 6px;
+
+  box-shadow:
+    0 0 12px hsl(var(--accent)),
+    0 0 25px hsl(var(--accent) / .35);
+}
+
+
+/* =========================================================
+   ROTATION
+   ========================================================= */
+
+@keyframes cursorRotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+  #cursor {
+    display: none;
+  }
+}

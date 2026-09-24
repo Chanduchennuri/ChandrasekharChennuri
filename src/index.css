@@ -1,19 +1,174 @@
-@tailwind base; @tailwind components; @tailwind utilities;
-:root{--background:0 0% 3%;--foreground:0 0% 100%;--card:0 0% 7%;--border:0 0% 100%/.09;--muted:0 0% 12%;--muted-foreground:0 0% 55%;--primary:0 0% 100%;--primary-foreground:0 0% 0%;--accent:174 72% 56%;--radius:.75rem}
-html{scroll-behavior:smooth;color-scheme:dark}
-body{@apply bg-background text-foreground antialiased;cursor:none;overflow-x:hidden}
-a,button{cursor:none}
-.bg-grid{position:fixed;inset:0;pointer-events:none;background-size:32px 32px;background-image:linear-gradient(to right,rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.12) 1px,transparent 1px);-webkit-mask-image:radial-gradient(circle 900px at 0 0,#000,rgba(0,0,0,.18) 75%,rgba(0,0,0,.03));mask-image:radial-gradient(circle 900px at 0 0,#000,rgba(0,0,0,.18) 75%,rgba(0,0,0,.03))}
-.top-light{position:fixed;top:-200px;left:-200px;width:850px;height:850px;pointer-events:none;filter:blur(50px);background:radial-gradient(circle,rgba(255,255,255,.22),rgba(255,255,255,.08) 35%,rgba(255,255,255,.02) 65%,transparent 85%)}
-.beam{position:fixed;inset:0;pointer-events:none;background:conic-gradient(from 135deg at 0 0,transparent 0,rgba(255,255,255,.06) 20deg,rgba(255,255,255,.16) 45deg,rgba(255,255,255,.03) 70deg,transparent 95deg);animation:lp 9s ease-in-out infinite alternate}
-@keyframes lp{from{opacity:.65}to{opacity:1;transform:scale(1.04)}}
-#cursor{position:fixed;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:9999;transition:width .35s cubic-bezier(.2,.8,.2,1),height .35s cubic-bezier(.2,.8,.2,1)}
-#cursor .spin{position:absolute;inset:0;animation:rc 2.2s linear infinite}
-#cursor.lock .spin{animation:none}
-@keyframes rc{to{transform:rotate(360deg)}}
-#cursor i{position:absolute;width:13px;height:13px;border:0 solid #fff;filter:drop-shadow(0 0 6px rgba(255,255,255,.5))}
-#cursor .a{top:0;left:0;border-width:2px 0 0 2px}#cursor .b{top:0;right:0;border-width:2px 2px 0 0}#cursor .c{bottom:0;right:0;border-width:0 2px 2px 0}#cursor .d{bottom:0;left:0;border-width:0 0 2px 2px}
-#cursor b{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;box-shadow:0 0 8px #fff}
-#cursor .t{left:50%;top:-2px}#cursor .r{right:-2px;top:50%}#cursor .m{left:50%;bottom:-2px}#cursor .l{left:-2px;top:50%}
-#cursor .dot{position:absolute;left:50%;top:50%;width:3px;height:3px;transform:translate(-50%,-50%);border-radius:50%;background:#fff;box-shadow:0 0 10px #fff}
-@media (hover:none){body,a,button{cursor:auto}#cursor{display:none}}
+@import './styles/cursor.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* =========================================================
+   GLOBAL THEME
+   ========================================================= */
+
+:root {
+  --background: 0 0% 3%;
+  --foreground: 0 0% 100%;
+  --card: 0 0% 7%;
+  --border: 0 0% 100% / .09;
+  --muted: 0 0% 12%;
+  --muted-foreground: 0 0% 55%;
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  --accent: 174 72% 56%;
+  --radius: .75rem;
+}
+
+
+/* =========================================================
+   DOCUMENT
+   ========================================================= */
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+
+/* =========================================================
+   BODY
+   ========================================================= */
+
+body {
+  @apply bg-background text-foreground antialiased;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   INTERACTIVE ELEMENTS
+   ========================================================= */
+
+a,
+button {
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   BACKGROUND GRID
+   ========================================================= */
+
+.bg-grid {
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  background-size: 32px 32px;
+
+  background-image:
+    linear-gradient(
+      to right,
+      rgba(255,255,255,.12) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(255,255,255,.12) 1px,
+      transparent 1px
+    );
+
+  -webkit-mask-image:
+    radial-gradient(
+      circle 900px at 0 0,
+      #000,
+      rgba(0,0,0,.18) 75%,
+      rgba(0,0,0,.03)
+    );
+
+  mask-image:
+    radial-gradient(
+      circle 900px at 0 0,
+      #000,
+      rgba(0,0,0,.18) 75%,
+      rgba(0,0,0,.03)
+    );
+}
+
+
+/* =========================================================
+   TOP LIGHT
+   ========================================================= */
+
+.top-light {
+  position: fixed;
+
+  top: -200px;
+  left: -200px;
+
+  width: 850px;
+  height: 850px;
+
+  pointer-events: none;
+
+  filter: blur(50px);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,.22),
+      rgba(255,255,255,.08) 35%,
+      rgba(255,255,255,.02) 65%,
+      transparent 85%
+    );
+}
+
+
+/* =========================================================
+   LIGHT BEAM
+   ========================================================= */
+
+.beam {
+  position: fixed;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    conic-gradient(
+      from 135deg at 0 0,
+      transparent 0,
+      rgba(255,255,255,.06) 20deg,
+      rgba(255,255,255,.16) 45deg,
+      rgba(255,255,255,.03) 70deg,
+      transparent 95deg
+    );
+
+  animation:
+    lp 9s ease-in-out infinite alternate;
+}
+
+
+@keyframes lp {
+  from {
+    opacity: .65;
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+   ========================================================= */
+
+@media (hover: none) {
+  body,
+  a,
+  button {
+    cursor: auto;
+  }
+}
