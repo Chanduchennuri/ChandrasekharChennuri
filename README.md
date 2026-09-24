@@ -1,5 +1,7 @@
 # Chandrasekhar Chennuri — Portfolio
 
+#Visit https://chanduchennuri.github.io/ChandrasekharChennuri/
+
 Single-page portfolio: **Vite + React 18 + TypeScript + Tailwind CSS + shadcn/ui-style components**.
 
 <img width="921" height="967" alt="image" src="https://github.com/user-attachments/assets/60b47eb1-64da-4b69-8e40-5c0d6f18edce" />
