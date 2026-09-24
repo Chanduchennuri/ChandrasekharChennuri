@@ -4,7 +4,6 @@
 
 #cursor {
   position: fixed;
-
   top: 0;
   left: 0;
 
@@ -12,19 +11,16 @@
   height: 34px;
 
   pointer-events: none;
-
   z-index: 99999;
 
-  will-change:
-    transform,
-    width,
-    height;
+  will-change: transform, width, height;
 
-  transform-origin: center;
+  transform-origin: center center;
 
   transition:
     width 220ms cubic-bezier(.2, .8, .2, 1),
-    height 220ms cubic-bezier(.2, .8, .2, 1);
+    height 220ms cubic-bezier(.2, .8, .2, 1),
+    opacity 180ms ease;
 }
 
 
@@ -34,20 +30,23 @@
 
 .cursor-reticle {
   position: absolute;
-
   inset: 0;
 
-  animation:
-    none;
+  /*
+   * Normal/free cursor rotates.
+   */
+  animation: cursorRotate 7s linear infinite;
 
-  transition:
-    transform 250ms ease,
-    opacity 200ms ease;
+  /*
+   * Do NOT transition transform here.
+   * Rotation is controlled directly by animation.
+   */
+  transition: opacity 200ms ease;
 }
 
 
 /* =========================================================
-   CORNERS
+   RETICLE CORNERS
    ========================================================= */
 
 .corner {
@@ -61,6 +60,12 @@
 
   opacity: .85;
 
+  filter:
+    drop-shadow(
+      0 0 4px
+      hsl(var(--accent) / .35)
+    );
+
   transition:
     width 220ms ease,
     height 220ms ease,
@@ -68,7 +73,9 @@
 }
 
 
-/* top left */
+/* =========================================================
+   TOP LEFT
+   ========================================================= */
 
 .corner-tl {
   top: 0;
@@ -78,7 +85,9 @@
 }
 
 
-/* top right */
+/* =========================================================
+   TOP RIGHT
+   ========================================================= */
 
 .corner-tr {
   top: 0;
@@ -88,7 +97,9 @@
 }
 
 
-/* bottom right */
+/* =========================================================
+   BOTTOM RIGHT
+   ========================================================= */
 
 .corner-br {
   right: 0;
@@ -98,7 +109,9 @@
 }
 
 
-/* bottom left */
+/* =========================================================
+   BOTTOM LEFT
+   ========================================================= */
 
 .corner-bl {
   bottom: 0;
@@ -109,7 +122,7 @@
 
 
 /* =========================================================
-   CENTER LINES
+   CENTER TARGET LINES
    ========================================================= */
 
 .cursor-line {
@@ -118,10 +131,18 @@
   background: hsl(var(--accent));
 
   opacity: .45;
+
+  filter:
+    drop-shadow(
+      0 0 3px
+      hsl(var(--accent) / .35)
+    );
 }
 
 
-/* top */
+/* =========================================================
+   TOP CENTER LINE
+   ========================================================= */
 
 .cursor-line-top {
   top: 0;
@@ -134,11 +155,13 @@
 }
 
 
-/* right */
+/* =========================================================
+   RIGHT CENTER LINE
+   ========================================================= */
 
 .cursor-line-right {
-  right: 0;
   top: 50%;
+  right: 0;
 
   width: 5px;
   height: 1px;
@@ -147,7 +170,9 @@
 }
 
 
-/* bottom */
+/* =========================================================
+   BOTTOM CENTER LINE
+   ========================================================= */
 
 .cursor-line-bottom {
   bottom: 0;
@@ -160,11 +185,13 @@
 }
 
 
-/* left */
+/* =========================================================
+   LEFT CENTER LINE
+   ========================================================= */
 
 .cursor-line-left {
-  left: 0;
   top: 50%;
+  left: 0;
 
   width: 5px;
   height: 1px;
@@ -193,29 +220,83 @@
   transform: translate(-50%, -50%);
 
   box-shadow:
-    0 0 8px hsl(var(--accent) / .8);
+    0 0 8px
+    hsl(var(--accent) / .8);
 
   transition:
-    transform 200ms ease,
     width 200ms ease,
-    height 200ms ease;
+    height 200ms ease,
+    box-shadow 200ms ease;
 }
 
 
 /* =========================================================
-   HOVER / TARGET LOCK
+   FREE CURSOR
    ========================================================= */
 
+/*
+ * Outside [data-target] elements:
+ *
+ * - follows mouse
+ * - rotates continuously
+ * - normal 34px size
+ */
+
+
+/* =========================================================
+   TARGET LOCK
+   ========================================================= */
+
+/*
+ * When the cursor enters a [data-target]:
+ *
+ * - STOP rotation
+ * - LOCK orientation
+ * - do not visually rotate
+ *
+ * !important is intentional here.
+ */
+
 #cursor.is-locked .cursor-reticle {
-  animation-duration: none;
+  animation: none !important;
+
+  /*
+   * Force the HUD to a fixed orientation.
+   */
+  transform: rotate(0deg) !important;
 }
+
+
+/* =========================================================
+   LOCKED CORNERS
+   ========================================================= */
 
 #cursor.is-locked .corner {
   width: 12px;
   height: 12px;
 
   opacity: 1;
+
+  filter:
+    drop-shadow(
+      0 0 6px
+      hsl(var(--accent) / .6)
+    );
 }
+
+
+/* =========================================================
+   LOCKED CENTER LINES
+   ========================================================= */
+
+#cursor.is-locked .cursor-line {
+  opacity: .7;
+}
+
+
+/* =========================================================
+   LOCKED CENTER DOT
+   ========================================================= */
 
 #cursor.is-locked .cursor-dot {
   width: 6px;
@@ -228,7 +309,7 @@
 
 
 /* =========================================================
-   ROTATION
+   CURSOR ROTATION
    ========================================================= */
 
 @keyframes cursorRotate {
@@ -243,11 +324,63 @@
 
 
 /* =========================================================
-   TOUCH DEVICES
+   TOUCH / MOBILE
    ========================================================= */
 
 @media (hover: none) {
+
+  /*
+   * There is no real mouse cursor on touch devices.
+   *
+   * Keep the HUD hidden by default.
+   */
+
   #cursor {
-    display: none;
+    opacity: 0;
+
+    transition:
+      width 180ms ease,
+      height 180ms ease,
+      opacity 180ms ease;
+  }
+
+
+  /*
+   * When a [data-target] is tapped,
+   * useCursor.ts adds .is-locked.
+   */
+
+  #cursor.is-locked {
+    opacity: 1;
+  }
+
+
+  /*
+   * Never rotate the HUD on touch devices.
+   */
+
+  #cursor .cursor-reticle {
+    animation: none !important;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  #cursor .cursor-reticle {
+    animation: none !important;
+  }
+
+  #cursor {
+    transition: none;
+  }
+
+  #cursor .corner,
+  #cursor .cursor-dot {
+    transition: none;
   }
 }
