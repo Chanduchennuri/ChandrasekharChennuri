@@ -2,6 +2,9 @@
 
 Single-page portfolio: **Vite + React 18 + TypeScript + Tailwind CSS + shadcn/ui-style components**.
 
+<img width="921" height="967" alt="image" src="https://github.com/user-attachments/assets/60b47eb1-64da-4b69-8e40-5c0d6f18edce" />
+
+
 | Piece | Tool |
 |---|---|
 | 3D background (Lorenz strange attractor, integrated in `src/lib/lorenz.ts`) | three.js + @react-three/fiber |
